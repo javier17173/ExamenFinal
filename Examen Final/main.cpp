@@ -13,7 +13,7 @@
 using namespace std;
 
 //constantes necesarias para el almacenamiento de los registros
-//Valores de prueba, a nivel real, se deberán utilizar registros más grandes
+//Valores de prueba, a nivel real, se deberÃ¡n utilizar registros mÃ¡s grandes
 const int MAX_VIAJEROS = 30;
 const int MAX_REGISTROS = 60;
  
@@ -21,25 +21,25 @@ const int MAX_REGISTROS = 60;
 HANDLE hConsoleHandle = GetStdHandle (STD_OUTPUT_HANDLE);
  
 //Estructuras de datos necesarias para el funcionamiento del programa
-struct Documento { //registra el tipo de documento y número del mismo. 
+struct Documento { //registra el tipo de documento y nÃºmero del mismo. 
 	string tipo;
 	string numero;
 };
 
-struct InformacionPersonal { //registra la información importante de una persona
+struct InformacionPersonal { //registra la informaciÃ³n importante de una persona
 	string nombre;
 	string apellido;
 	string nacionalidad;
 	string fechaNacimiento;
 };
 
-struct Viajero { //registra la información del viajero 
+struct Viajero { //registra la informaciÃ³n del viajero 
 	int id;
 	InformacionPersonal infoPersonal;
 	Documento documento;
 };
 
-struct Registro { //registra la información del los viajes
+struct Registro { //registra la informaciÃ³n del los viajes
 	int id;
 	int idViajero;
 	string lugarSalida;
@@ -49,7 +49,7 @@ struct Registro { //registra la información del los viajes
 	string numeroTicket;
 };
 
-struct Lugar { //registra la información del los lugares
+struct Lugar { //registra la informaciÃ³n del los lugares
 	string ciudad;
 	string pais;
 };
@@ -105,7 +105,7 @@ void cuadro(int x1, int y1, int x2, int y2){
 	gotoxy(x2,y2); printf("%c",188);  
 
 }
-void registrarViajero() { //Método que sirve para registrar un viajero
+void registrarViajero() { //MÃ©todo que sirve para registrar un viajero
 	
 	char sigue;
 
@@ -118,13 +118,13 @@ void registrarViajero() { //Método que sirve para registrar un viajero
 		gotoxy(22,04); printf("INGRESANDO DATOS");
 	
 		if (cantidadViajeros >= MAX_VIAJEROS) {
-			cout << "No se pueden registrar más viajeros.\n";
+			cout << "No se pueden registrar mÃ¡s viajeros.\n";
 			return;
 		}
 	
 		Viajero v;
 		v.id = cantidadViajeros + 1;
-	
+		// se solicita la informaciÃ³n del viajero
 		gotoxy(16,8);cout << "Ingrese el nombre del viajero: ";
 		cin >> v.infoPersonal.nombre;
 		gotoxy(16,10);cout << "Ingrese el apellido del viajero: ";
@@ -138,10 +138,11 @@ void registrarViajero() { //Método que sirve para registrar un viajero
 		cin >> v.documento.tipo;
 		gotoxy(16,18);cout << "Ingrese el numero de documento: ";
 		cin >> v.documento.numero;
-	
+
+		//Se guarda en el arreglo de los viajeros
 		viajeros[cantidadViajeros] = v;
 		cantidadViajeros++;
-		gotoxy(16,20);cout << "Viajero registrado con éxito \n";
+		gotoxy(16,20);cout << "Viajero registrado con Ã©xito \n";
 		
 		do{
 			SetConsoleTextAttribute (hConsoleHandle, 2);
@@ -152,7 +153,7 @@ void registrarViajero() { //Método que sirve para registrar un viajero
 	
 	}while (tolower(sigue)=='s');	
 }
-void registrarEntradaSalida() { //Método que sirve para registrar la entrada o salida del viajero
+void registrarEntradaSalida() { //MÃ©todo que sirve para registrar la entrada o salida del viajero
 	
 	char sigue;
 
@@ -164,22 +165,24 @@ void registrarEntradaSalida() { //Método que sirve para registrar la entrada o s
 		SetConsoleTextAttribute (hConsoleHandle, 10);
 		gotoxy(22,04); printf("REGISTROS");
 	
-	
+		
 		if (cantidadRegistros >= MAX_REGISTROS) {
-			cout << "No se pueden registrar más entradas/salidas." << endl;
+			cout << "No se pueden registrar mÃ¡s entradas/salidas." << endl;
 			return;
 		}
-	
+
+		//Se realizan las entradas y salidas de cada viaje
+		
 		Registro r;
 		r.id = cantidadRegistros + 1;
 	
 		gotoxy(16,8);cout << "Ingrese el ID del viajero: ";
 		cin >> r.idViajero;
-		cin.ignore(); //Permite ignorar lo ingresado anteriormente y no saltarse una línea
+		cin.ignore(); //Permite ignorar lo ingresado anteriormente y no saltarse una lÃ­nea
 		gotoxy(16,10);cout << "Ingrese el lugar de salida (ciudad, pais): ";
-		getline(cin, r.lugarSalida);  //línea que funciona para incluir espacios   
+		getline(cin, r.lugarSalida);  //lÃ­nea que funciona para incluir espacios   
 		gotoxy(16,12);cout << "Ingrese el lugar de llegada (ciudad, pais): ";
-		getline(cin, r.lugarLlegada); //línea que funciona para incluir espacios  
+		getline(cin, r.lugarLlegada); //lÃ­nea que funciona para incluir espacios  
 		gotoxy(16,14);cout << "Ingrese la fecha (DD/MM/AAAA): ";
 		cin >> r.fecha;
 		gotoxy(16,16);cout << "Ingrese la hora (HH:MM): ";
@@ -202,7 +205,7 @@ void registrarEntradaSalida() { //Método que sirve para registrar la entrada o s
 	
 	
 }
-void eliminarViajero() { ////Método que sirve para eliminar a un viajero
+void eliminarViajero() { ////MÃ©todo que sirve para eliminar a un viajero
 	char sigue;
 	int id;
 	
@@ -218,15 +221,15 @@ void eliminarViajero() { ////Método que sirve para eliminar a un viajero
 		cin >> id;
 	
 		for (int i = 0; i < cantidadViajeros; i++) { //Se recorre todo el vector de viajeros
-			if (viajeros[i].id == id) { //si se encuentra el viajero, se realiza la eliminación y se corre una posición hacia atrás
+			if (viajeros[i].id == id) { //si se encuentra el viajero, se realiza la eliminaciÃ³n y se corre una posiciÃ³n hacia atrÃ¡s
 				for (int j = i; j < cantidadViajeros - 1; j++) {
-					viajeros[j+1].id = viajeros[j].id; //El último viajero toma el ID del viajero eliminado, para que quede en secuencia
-					viajeros[j] = viajeros[j + 1]; //El último viajero toma el la posición viajero eliminado, para que quede en secuencia
+					viajeros[j+1].id = viajeros[j].id; //El Ãºltimo viajero toma el ID del viajero eliminado, para que quede en secuencia
+					viajeros[j] = viajeros[j + 1]; //El Ãºltimo viajero toma el la posiciÃ³n viajero eliminado, para que quede en secuencia
 					
 				}
 				cantidadViajeros--;
 				
-				gotoxy(16,10);cout << "Viajero eliminado con éxito." << endl;
+				gotoxy(16,10);cout << "Viajero eliminado con Ã©xito." << endl;
 			}else{
 				gotoxy(16,10);cout << "Viajero no encontrado." << endl;
 			}
@@ -243,7 +246,7 @@ void eliminarViajero() { ////Método que sirve para eliminar a un viajero
 	}while (tolower(sigue)=='s');
 		
 }
-void ordenarViajerosPorNombreBurbuja() { //Método que ayuda a ordenar a los viajeros alfabéticamente de la A -Z mediante el algoritmo burbuja
+void ordenarViajerosPorNombreBurbuja() { //MÃ©todo que ayuda a ordenar a los viajeros alfabÃ©ticamente de la A -Z mediante el algoritmo burbuja
 	
 	char sigue;
 	int id;
@@ -264,8 +267,8 @@ void ordenarViajerosPorNombreBurbuja() { //Método que ayuda a ordenar a los viaj
 			}
 		}
 		
-		//El algoritmo va posición por posición y si encuentra que el siguiente de n (n+1) es alfabétocamente
-		//superior a él, se intercambian posiciones. 
+		//El algoritmo va posiciÃ³n por posiciÃ³n y si encuentra que el siguiente de n (n+1) es alfabÃ©tocamente
+		//superior a Ã©l, se intercambian posiciones. 
 		
 		gotoxy(22,10);cout << "Viajeros ordenados por nombre (Burbuja)." << endl;
 		do{
@@ -278,14 +281,14 @@ void ordenarViajerosPorNombreBurbuja() { //Método que ayuda a ordenar a los viaj
 	}while (tolower(sigue)=='s');
 		
 }
-void consultarViajeros() {//método para ver todos los viajeros ingresados
+void consultarViajeros() {//mÃ©todo para ver todos los viajeros ingresados
 	char sigue;
 	int id;
 	
 	do{
 		system("cls");
 	
-	
+		//Se muestra en pantalla toda la informaciÃ³n de los viajeros
 		for (int i = 0; i < cantidadViajeros; i++) {
 			cout << "ID: " << viajeros[i].id 
 				<< ", Nombre: " << viajeros[i].infoPersonal.nombre
@@ -305,7 +308,7 @@ void consultarViajeros() {//método para ver todos los viajeros ingresados
 	
 	}while (tolower(sigue)=='s');
 }
-void consultarRegistros() {//método para ver todos registros de ingresos y salidas ingresados
+void consultarRegistros() {//mÃ©todo para ver todos registros de ingresos y salidas ingresados
 	
 	char sigue;
 	int id;
@@ -313,7 +316,7 @@ void consultarRegistros() {//método para ver todos registros de ingresos y salid
 	do{
 		system("cls");
 	
-	
+		//Se muestra en pantalla toda la informaciÃ³n de los registros de entradas y salidas
 		for (int i = 0; i < cantidadRegistros; i++) {
 			cout << "ID Registro: " << registros[i].id 
 				<< ", ID Viajero: " << registros[i].idViajero
@@ -334,7 +337,7 @@ void consultarRegistros() {//método para ver todos registros de ingresos y salid
 	}while (tolower(sigue)=='s');
 		
 }
-void menu(){ //método del menú
+void menu(){ //mÃ©todo del menÃº
 	char opc,conti;
 	
 	do{
@@ -343,7 +346,7 @@ void menu(){ //método del menú
 		cuadro(16,1,65,3); //primer cuadro de arriba hacia abajo
 		cuadro(8,4,72,22);//grande
 		cuadro(8,23,72,25); //cuadro de abajo opcion es
-		cuadro(59,19,71,21); //cuadro pequeño salir
+		cuadro(59,19,71,21); //cuadro pequeÃ±o salir
 
 		SetConsoleTextAttribute (hConsoleHandle, 10);
 	    gotoxy(22,2);printf("***** MIGRACION DE COSTA RICA *****");
